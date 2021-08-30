@@ -41,8 +41,8 @@ parts:
       - xdg-user-dirs
       - libglu1-mesa
       - libslang2
-      - python3-pyqt5 #Dist python3 PyQt5 Binding(uses desktop-qt5 .SO's)
-      - qt5-gtk-platformtheme #Platform themes plugin
+      - python3-pyqt5
+      - qt5-gtk-platformtheme
 
   cleanup:
      after:
