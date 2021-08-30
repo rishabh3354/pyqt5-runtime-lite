@@ -1,0 +1,54 @@
+name: pyqt5-runtime-lite
+version: '18.04'
+summary: PyQt5 runtime lite stack based on core18.
+description: |
+  This snap is to be consumed by various PyQt5 apps which uses Qt 5.9+.
+  Qt provides C++ classes and QML types for rendering GUI.
+grade: stable
+confinement: strict
+base: core18
+
+architectures:
+  - build-on: amd64
+    run-on: amd64
+
+slots:
+  pyqt5-runtime:
+    interface: content
+    read:
+      - /
+parts:
+  desktop-qt5:
+     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+     source-subdir: qt
+     plugin: make
+     make-parameters: ["FLAVOR=qt5"]
+     build-packages:
+      - build-essential
+      - qtbase5-dev
+      - dpkg-dev
+     stage-packages:
+      - libxkbcommon0
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
+      - shared-mime-info
+      - libdb5.3
+      - libgdk-pixbuf2.0-0
+      - locales-all
+      - xdg-user-dirs
+      - libglu1-mesa
+      - libslang2
+      - python3-pyqt5 #Dist python3 PyQt5 Binding(uses desktop-qt5 .SO's)
+      - qt5-gtk-platformtheme #Platform themes plugin
+
+  cleanup:
+     after:
+       - desktop-qt5
+     plugin: nil
+     override-prime: |
+       # Remove unneeded stage files to save space
+       cd usr/share
+       rm -rf apport bash-completion bug doc doc-base lintian man pam-configs pkgconfig upstart zsh
