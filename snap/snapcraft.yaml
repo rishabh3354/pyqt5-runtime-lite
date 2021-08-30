@@ -1,22 +1,21 @@
-name: pyqt5-runtime 
+name: pyqt5-runtime-lite
 version: '18.04'
 summary: PyQt5 runtime lite stack based on core18.
 description: |
   This snap is to be consumed by various PyQt5 apps which uses Qt 5.9+.
   Qt provides C++ classes and QML types for rendering GUI.
-grade: stable 
-confinement: strict 
+grade: stable
+confinement: strict
 base: core18
-
 
 architectures:
   - build-on: amd64
     run-on: amd64
 
-slots: 
+slots:
   pyqt5-runtime:
     interface: content
-    read: 
+    read:
       - /
 parts:
   desktop-qt5:
@@ -44,25 +43,9 @@ parts:
       - libslang2
       - python3-pyqt5 #Dist python3 PyQt5 Binding(uses desktop-qt5 .SO's)
       - qt5-gtk-platformtheme #Platform themes plugin
-      
-  mpv-ppa:
-     plugin: nil
-     override-pull: |
-       snapcraftctl pull
-       apt install wget
-       echo "deb http://ppa.launchpad.net/mc3man/mpv-tests/ubuntu bionic main" >>  /etc/apt/sources.list
-       wget -qO - http://ktechpit.com/USS/Olivia/snapcraft/mpv.key | apt-key add -
-       apt update
-       
-  deps:
-     plugin: nil
-     after: [mpv-ppa]
-     stage-packages:
-           - mpv # this is ppa version of mpv
-           - ffmpeg # used by y2mate for merging audio video
 
   cleanup:
-     after: 
+     after:
        - desktop-qt5
      plugin: nil
      override-prime: |
