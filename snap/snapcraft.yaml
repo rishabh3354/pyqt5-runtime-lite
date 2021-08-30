@@ -13,7 +13,7 @@ architectures:
     run-on: amd64
 
 slots:
-  pyqt5-runtime:
+  pyqt5-runtime-lite:
     interface: content
     read:
       - /
